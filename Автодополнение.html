@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Автодополнение</title>
+</head>
+<body>
+  <ul id = "ul"></ul>
+  <input type="text" list = "list">
+  <datalist id = "list">
+  </datalist>
+
+
+  <script type="text/javascript">
+var ul = document.getElementById('ul');
+var input = document.querySelector('input');
+var list = document.getElementById('list');
+var arr = ['Россия', 'Канада', 'США','Коррея', 'Румыния', 'Кавказ'];
+var str = '';
+var index = [];
+
+addList(list, arr, input);
+input.addEventListener('blur', function() {
+  str = this.value;
+  index = searchStr(arr, str, index);
+  main(index);
+  addTd(ul, index);
+});
+
+function addList(list, arr, input) {
+  for (var i = 0; i < arr.length; i++) {
+    var option = document.createElement('option');
+    option.innerHTML = arr[i];
+    clickOption(option, input);
+    list.appendChild(option);
+
+  }
+}
+
+function clickOption(option, input) {
+  option.addEventListener('click', function() {
+    input.value = option.innerHTML;
+  });
+}
+
+
+
+
+function main (index) {
+    for (var i = 0; i < index.length; i++) {
+        console.log(index[i]);
+    }
+}
+
+function addTd (ul, index) {
+  for (var i = 0; i < index.length; i++) {
+    var li = document.createElement('li');
+    li.innerHTML = index[i];
+    ul.appendChild(li);
+  }
+}
+
+
+function getFirstStr(arr, str, index) {
+  for (var i = 0; i < arr.length; i++) {
+    index[i] = arr[i].slice(0, str.length);
+  }
+  return index;
+}
+
+function searchStr(arr, str, index) {
+  for (var i = 0; i < arr.length; i++) {
+     if (arr[i].indexOf(str) != -1) {
+       index.push(arr[i]);
+     }
+  }
+  return index;
+}
+
+
+
+
+
+  </script>
+
+
+</body>
+</html>
